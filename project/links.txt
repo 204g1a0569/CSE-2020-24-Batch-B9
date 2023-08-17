@@ -1,0 +1,97 @@
+https://sci-hub-links.com/
+https://sci-hub.se/
+https://sci-hub-links.com/scihub/
+
+syntax of abstract ;;;;;;;;;;;;;;;;;;;
+The context or background information for your research
+The general topic and specific research question or problem
+The main objectives and goals of your research
+The methods you used to conduct your research
+The results or findings of your research
+The conclusions or implications of your research
+
+Note : The above points should be specified in an abstract using paragraphs mostly 1 or 2
+
+
+abstract :Air embolism poses a critical threat in healthcare during saline administration. This work introduces an innovative solution—a real-time Automatic Saline Monitoring System that prevents air embolism incidents. By continuously tracking saline levels and triggering alerts when reaching critical thresholds, the system empowers healthcare providers to respond promptly. A dashboard interface enhances visualization. This technology not only safeguards patient well-being but also streamlines nursing procedures, showcasing the potential of smart systems to revolutionize healthcare safety and quality.
+
+quillboat abstract
+
+////Healthcare workers are at serious risk from air embolism when administering saline. A real-time Automatic Saline Monitoring System is presented in this study as a novel remedy for occurrences of air embolism. The device enables healthcare providers to act quickly by continuously monitoring saline levels and sending notifications when they approach critical thresholds. An interface for a dashboard improves visualization. This technology shows the potential of intelligent systems to fundamentally change healthcare safety and quality by not only ensuring patient well-being but also streamlining nursing procedures./////
+
+/////Rapid growth in the healthcare industry necessitates efficient control of patient monitoring levels and saline bottle closures. However, air embolism and patient monitoring receive insufficient attention. An IoT platform called Blynk is connected to a "LED-Photodiode based system" that uses an Arduino Uno to monitor saline bottles. When the saline level reaches a critical level, the device warns nurses and doctors, preventing deadly mishaps and complications like air embolism.
+
+In both urban and rural regions, novel health monitoring systems are being created with minimal human influence. These devices enable nurses to check on saline levels even in the control room and are designed to easily troubleshoot issues. The system makes use of level sensors to determine the status of the liquid and output to determine whether the bottle is/////
+
+
+
+Since the healthcare industry has grown quickly, it is important to maintain patient monitoring levels and saline bottle closures properly. Patient monitoring and air embolism, however, are not given enough focus. With the help of an Arduino Uno and an IoT platform called Blynk, a "LED-Photodiode based system" keeps track of saline bottles. In order to prevent tragic accidents and complications, the system warns nurses and doctors when the saline level reaches a critical level.
+
+Innovative health monitoring systems are being created with less human intervention and are affordable in both rural and urban regions. These technologies are designed to solve issues quickly and enable nurses to check saline levels even from the control room. In order to determine the liquid's condition and determine whether the bottle is empty, the system uses level sensors.
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;problem satement:;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+Paragraph 1:
+
+Air embolism is a serious and potentially life-threatening problem that can happen during medical procedures. Even though medical technology has improved and safety measures are better, air embolism is still a big worry in healthcare. This issue is about finding ways to prevent, detect early, and manage air embolism in hospitals. We want to come up with new ideas, rules, and tools to reduce how often air embolisms happen. Making sure doctors can quickly find and treat air embolism is really important for keeping patients safe and improving healthcare.
+
+Paragraph 2:
+
+In hospitals, air embolism is a big concern because it can harm patients. We're trying to solve this problem by figuring out how to stop air embolisms from happening and catching them early if they do. We want to create better plans, rules, and technologies to lower the chances of air embolism. Also, we want doctors to be able to find and treat air embolism faster. By doing all this, we can make sure patients are safer during medical procedures and make healthcare better overall.
+
+Paragraph 3:
+
+Sometimes, air embolism can happen because the people taking care of patients, like nurses and caretakers, might not be paying full attention. This is a challenge because small mistakes can lead to big problems. We want to help nurses and caretakers understand the importance of being careful during procedures. By making sure everyone involved is well-trained and focused, we can reduce the chances of air embolism and keep patients safe. It's all part of our goal to improve healthcare and make sure patients are getting the best possible care.
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Objectives of project;;;;;;;;;;;;;;;;;;;;;;;;;;;
+two objectives
+[Verb] + [Specific Focus] + [Scope/Target]
+Research Objective: To analyze the impact of social media on academic performance among college students.
+
+
+
+
+................................literature survey1....................
+
+Automatic saline monitoring has been investigated using a variety of techniques. These include systems using optical sensors, motors, and actuators to control drip rates and tube clamping, weight sensors to assess the weight of saline bottles continually, an IR-based sensor to detect low IV fluid levels, and other devices. The 'dripassist infusion rate monitor,' created by Shiftlabs, tracks IV tube drips. Alternately, electromechanical alternatives have been suggested, such as using a spring as a weight sensor. Systems built on Arduino that use IR sensors to monitor levels have also been researched. When saline levels are dangerously low, these designs are intended to warn medical practitioners. With our novel method, we combine a cutting-edge clamping mechanism for tube control with LEDs and photodiodes as sensors and detectors.
+
+Comparing these approaches, each has strengths and weaknesses. The cost-effective use of LEDs and photodiodes in combination with a sophisticated clamping mechanism, however, is where our innovation resides. Together, these components provide an effective and dependable method for automatic saline monitoring that could advance medical technology.
+
+
+Automatic saline monitoring has been investigated using a variety of approaches. These include IR-based sensors for detecting low IV fluid levels, weight sensors for continuous weight evaluation of saline bottles, optical sensors, motors, and actuators for drip control, and other devices. The 'dripassist infusion rate monitor' by Shiftlabs keeps track of IV tube drips. There have also been suggested electromechanical alternatives, such as using springs as weight sensors and Arduino-based systems with IR sensors for level monitoring. When saline levels are in danger, these designs are meant to warn medical personnel.
+
+Our novel method employs LEDs and photodiodes as sensors and detectors along with a sophisticated clamping mechanism for tube control. The cost-effective usage of photodiodes and LEDs, together with the intricate clamping mechanism, is where the innovation lies. Combining these two provides a dependable method for automatic
+
+..................literature survey2.................
+
+Traditional healthcare practices are becoming obsolete in a time of expanding global population. The current healthcare system requires manual caregivers, who are tasked with time-consuming, ongoing monitoring duties. Unique health monitoring systems that run with little human involvement and are financially sustainable in both urban and rural settings are increasingly in demand. Health monitoring systems with electronic components including sensors, PLCs, microcontrollers, and simple user interfaces have emerged as a result of the integration of engineering technologies with the medical industry to meet this difficulty.
+
+The creation of a sophisticated saline level monitoring system is the main topic of this essay. Healthcare needs are expanding as the world's population grows. Due to the collaboration of two crucial fields, engineering and medicine, medical treatment has rapidly improved in recent years. The study describes the development of an autonomous saline monitoring system using a GSM modem and a low-cost, locally available sensor. This makes it possible for medical experts to remotely monitor saline flow rates. Actions are coordinated by an 8051 microcontroller, and the saline bottle's neck's IR sensor precisely measures liquid flow rates. The output of the sensor is examined to establish if the flow is slow, medium, or quick, and the information is then sent through GSM to mobile devices for later use.
+
+The system finds application in rural public hospitals where it facilitates the monitoring of saline droplets for each patient's bed. By implementing measurement modules across all beds, nurses can efficiently oversee saline droplet status, rate, and remaining time on a computer interface. The statuses include Normal, Warning, Error, and Change New Bag, reducing the need for frequent bedside visits. This affordable and convenient solution contributes to effective patient care in rural settings. The paper also explores the integration of wireless technology and mobile services into the medical sector, showcasing an ECG sensor-based wireless patient monitoring system concept. Moreover, the paper highlights the role of LCD indicators for saline levels and mobile applications in displaying essential patient data. However, despite technological advancements, challenges persist in ensuring patient fluid and electrolyte management in hospitals, often stemming from oversight and busy schedules.
+
+
+
+
+User
+Automatic saline monitoring has been investigated using a variety of techniques. These include systems using optical sensors, motors, and actuators to control drip rates and tube clamping, weight sensors to assess the weight of saline bottles continually, an IR-based sensor to detect low IV fluid levels, and other devices. The 'dripassist infusion rate monitor,' created by Shiftlabs, tracks IV tube drips. 
+Alternately, electromechanical alternatives have been suggested, such as using a spring as a weight sensor. Systems built on Arduino that use IR sensors to monitor levels have also been researched. When saline levels are dangerously low, these designs are intended to warn medical practitioners. With our novel method, we combine a cutting-edge clamping mechanism for tube control with LEDs and photodiodes as sensors and detectors.
+The cost-effective use of LEDs and photodiodes in combination with a sophisticated clamping mechanism, however, is where our innovation resides. Together, these components provide an effective and dependable method for automatic saline monitoring that could advance medical technology. make these paragraphs precise
+ChatGPT
+Various techniques have been explored for automatic saline monitoring. These include optical sensors, motors, and actuators for drip control, weight sensors for continuous weight assessment of saline bottles, IR-based sensors for detecting low IV fluid levels, and other solutions. Shiftlabs' 'dripassist infusion rate monitor' tracks IV tube drips. Electromechanical options, like utilizing springs as weight sensors, and Arduino-based systems with IR sensors for level monitoring have also been proposed. These designs aim to alert medical staff when saline levels become critical.
+
+Our unique approach combines an advanced clamping mechanism for tube control with LEDs and photodiodes as sensors and detectors. The innovation lies in the cost-effective use of LEDs and photodiodes, along with the sophisticated clamping mechanism. This combination offers a reliable solution for automatic saline monitoring, with potential to advance medical technology.
+
+
+
+
+Global population growth has increased the need for cutting-edge health monitoring systems that are economical for both urban and rural locations and require less human intervention. In order to remotely monitor saline flow rates, this work focuses on developing an advanced saline level monitoring system that makes use of an affordable sensor and a GSM modem. The device can be used in remote public hospitals to monitor the saline droplets on each patient's bed. The technique is practical and inexpensive, resulting in fewer frequent visits to the patient's bedside and improving patient care. The paper also discusses the integration of wireless technologies and presents a wireless patient monitoring system concept based on ECG sensors. Mobile apps for showing patient data and LCD indications for saline levels are also highlighted. Despite the technology
+
+
+
+
+
