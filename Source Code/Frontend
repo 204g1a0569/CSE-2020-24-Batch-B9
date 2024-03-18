@@ -1,1 +1,145 @@
+File name: Views.py
+from django.shortcuts import render, redirect
+from .models import Vitamin
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+import os
+import numpy as np
+import tensorflow 
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.models import load_model
+# Create your views here.
 
+# Rendering the home page
+def home(request):
+    return render(request,"home.html")
+
+# Rendering The About page
+def about(request):
+    return render(request,"about.html")
+
+# Rendering Registeration page
+def register(request):
+    # Taking the data to database entered by user
+    if request.method=='POST':
+        email1=request.POST['useremail']
+        password=request.POST['psw']
+        confirmpassword=request.POST['conpassword']
+        if password==confirmpassword:
+            a =  User.objects.create_user(username=email1, email=email1, password=password)
+            msg="Successfully Registered"
+            return render(request,'login.html',{"msg":msg})
+        mssg="Registration Failed, Try Again"
+
+        return render(request,"register.html",{'msg':mssg})
+    return render(request,"register.html")
+
+
+# Rendering Login Page
+def logins(request):
+    if request.method=='POST':
+        email=request.POST['useremail']
+        password=request.POST['psw']
+        # Authenticates if the mailid and password is present in the database
+        d=authenticate(username=email, password=password)
+        print(d)
+        if d is not None:
+            login(request, d)
+            return redirect("homepage")
+    return render(request,"login.html")
+
+# Rendering The Upload Page
+def upload(request):
+    if request.method=='POST':
+        Classes=[]
+        paths=os.listdir(r'C:\Users\Pallavi Reddy\Downloads\crtcode\TK118622\CODE\Backend\dataset\test')
+        m1 = int(request.POST['alg'])
+        for i in paths:
+            Classes.append(i)
+        
+        # Saving the image file in the below mentioned directory
+        File=request.FILES['brain']
+        s=Vitamin(image=File)
+        s.save()
+        path1='app/static/images/' + s.filename()
+
+        # Loading the Respective Models and preocessing  
+        if m1==1:
+            model=load_model(r'C:\Users\Pallavi Reddy\Downloads\crtcode\TK118622\CODE\Frontend\app\models\mobilenet.h5')
+            x1=image.load_img(path1,target_size=(224,224))
+            x1=image.img_to_array(x1)
+            x1=np.expand_dims(x1,axis=0)
+            x1/=255
+            
+
+        if m1==2:
+            model=load_model(r'C:\Users\Pallavi Reddy\Downloads\crtcode\TK118622\CODE\Frontend\app\models\ANN.h5')
+            x1=image.load_img(path1,target_size=(224,224))
+            x1=image.img_to_array(x1)
+            x1=np.expand_dims(x1,axis=0)
+            x1/=255
+            
+        if m1==3:
+            model=load_model(r'C:\Users\Pallavi Reddy\Downloads\crtcode\TK118622\CODE\Frontend\app\models\CNN.h5')
+            x1=image.load_img(path1,target_size=(224,224))
+            x1=image.img_to_array(x1)
+            x1=np.expand_dims(x1,axis=0)
+            x1/=255
+
+        if m1==4:
+            model=load_model(r'C:\Users\Pallavi Reddy\Downloads\crtcode\TK118622\CODE\Frontend\app\models\Nasnet.h5')
+            x1=image.load_img(path1,target_size=(224,224))
+            x1=image.img_to_array(x1)
+            x1=np.expand_dims(x1,axis=0)
+            x1/=255
+        
+        # Predicting and Showing the message   
+        result=model.predict(x1)
+        b1=np.argmax(result)
+        results=Classes[b1]    
+        if results == "aloperia areata":
+            msg = "Consider the Mediterranean diet, which is high in fruits, vegetables, nuts, whole grains, fish and healthy oils. Take the right supplements. According to a 2018 study published in Dermatology and Therapy, you need key nutrients in your diet to prevent hair loss."
+
+        elif results == "beaus lines":
+            msg = "Dark green leafy vegetables, as well as quinoa, almonds, cashews, peanuts, edamame and black beans, are good sources, too. Summary Adequate magnesium intake is crucial to prevent vertical ridges in your nails. This mineral also helps with protein synthesis and the formation of new nails"
+
+        elif results == "bluish nail":
+            msg = "Plenty of nutrients in food can help your nails, taking them from dry and brittle to healthy and strong. Foods that can improve your nails include fruits, lean meats, salmon, leafy greens, beans, eggs, nuts, and whole grains."
+
+        elif results == "bulging eyes":
+            msg = "Eating foods high in potassium also helps counter the salt. These include.bananas,yogurt,potatoes,dried,apricots"
+
+        elif results == "cataracts eyes":
+            msg = "Eat Right. You can't do anything about your age or family history, but you can change your diet. Some research shows that eating foods high in antioxidants like vitamins C and E may help prevent cataracts. If you already have cataracts, it may slow their growth."
+
+        elif results == "clubbing":
+            msg = "Meat, fish, eggs, beans and nuts. Aim for two portions a day, except for fish, which should be eaten twice a week (with one serving being oily fish)."
+
+        elif results == "crossed eyes":
+            msg = "Omega-3 fatty acid from cold-water fish like salmon, tuna, sardines and halibut reduce the risk of developing eye disease.Oranges and all of their citrus cousins grapefruit, tangerines, tomatoes and lemons are high in vitamin C, an antioxidant that is critical to eye health"
+
+        elif results == "Dariers disease":
+            msg = "There is no food Diet only Treatment.Herpes simplex is treated with aciclovir or valaciclovir. Severe Darier disease is usually treated with oral retinoids, either acitretin or isotretinoin. Ciclosporin has been reported to be effective in a few patients."
+
+        elif results == "eczema":
+            msg = "Vegetables and fruits that are high in inflammation-fighting flavonoids: Apples, broccoli, cherries, blueberries, spinach, and kale. Flavonoids have been found to help improve the overall health of a person's skin and fight problems such as inflammation (which is associated with eczema)."
+
+        elif results == "glucoma eyes":
+            msg = "people who drank at least one cup of hot tea daily lowered their glaucoma risk by 74% compared to those who did not. The foundation also suggested chocolate, bananas, avocados, pumpkin seeds and black beans for their health benefits."
+
+        elif results =="Lindsays nails":
+            msg = "A healthy diet can keep the nails healthy and prevent the formation of hangnails. Hangnails can result from a protein deficiency, as well as a lack of essential vitamins including folic acid, vitamin B, vitamin C, and keratin.Kiwi,Broccoli,Bell peppers,Tomatoes."
+        elif results=='lip':
+            msg="Eggs, milk, carrots, spinach, apricots.Helps boost immune system, restore lips after sun or wind damage, and retain collagen.	Orange juice, strawberries, green peppers, citrus fruits, tomatoes, sweet potatoes"
+        elif results=="tounge":
+            msg = "Head to your refrigerator or grocery store and look for cool items like yogurt or applesauce. After eating, make sure to drink water to remove the stuck food debris that can harm your burning tongue."
+        else:
+            msg="The best way to ensure good eye health for yourself and your loved ones is to eat a diet that contains all the essential nutrients."
+        return render(request,"result.html",{"message":results,"path":'/static/images/' + s.filename(),'msg':msg})
+
+
+    return render (request,"upload.html")
+    
+# Rendering Result Page
+def result(request):
+    return render(request,"result.html")
