@@ -1,1 +1,313 @@
+file name: ann.ipnb
 
+#Importing Libraries which are needed for us to code 
+from tensorflow import keras
+from keras.models import Sequential, load_model
+from keras.layers import Dense, GlobalAveragePooling2D,Convolution2D,MaxPooling2D,Flatten
+from matplotlib import pyplot as plt
+from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications import MobileNet
+from tensorflow.keras.applications.mobilenet import preprocess_input
+from tensorflow.keras.models import Model
+import tensorflow as tf
+
+#Data Pre-processing and applying it to Train and Test Data
+train_datagen = ImageDataGenerator(rescale=1. / 255,
+                                   shear_range=0.2,
+                                   zoom_range=0.2,
+                                   horizontal_flip=True)
+
+print("\nTraining the data...\n")
+training_set = train_datagen.flow_from_directory('dataset/train/',
+                                                 target_size=(224,224),
+                                                 batch_size=12,
+                                                 class_mode='categorical'
+                                                 )
+
+test_set = train_datagen.flow_from_directory('dataset/test/',
+                                            target_size=(224,224),
+                                            batch_size=12,
+                                            class_mode='categorical'
+                                            )
+print("\n Testing the data.....\n")
+
+# Model Building 
+Annmodel = Sequential([
+    keras.layers.Flatten(input_shape = [224, 224,3]),
+    keras.layers.Dense(128, activation = 'relu'),
+    keras.layers.Dense(64, activation = 'relu'),
+    keras.layers.Dense(32, activation = 'relu'),
+    keras.layers.Dense(14, activation = 'softmax')
+])
+Annmodel.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+Annmodel.summary()
+annhistory=Annmodel.fit(training_set,epochs = 30,validation_data = test_set,verbose = 1)
+Annmodel.save("models/ANN.h5")
+# Plotting Graphs
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(annhistory.history['accuracy'],'r',label='Testing accuracy',color='green')
+plt.plot(annhistory.history['val_accuracy'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/ann_acc.png")
+plt.show()
+
+
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(annhistory.history['loss'],'r',label='Testing accuracy',color='green')
+plt.plot(annhistory.history['val_loss'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/ann_loss.png")
+plt.show()
+
+
+annacc=annhistory.history['accuracy'][-1]
+print(annacc)
+
+File name: cnn.ipynb
+#Importing Libraries which are needed for us to code 
+from keras.models import Sequential, load_model
+from keras.layers import Dense, GlobalAveragePooling2D,Convolution2D,MaxPooling2D,Flatten
+from matplotlib import pyplot as plt
+from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications import MobileNet
+from tensorflow.keras.applications.mobilenet import preprocess_input
+from tensorflow.keras.models import Model
+import tensorflow as tf
+
+#Data Pre-processing and applying it to Train and Test Data
+train_datagen = ImageDataGenerator(rescale=1. / 255,
+                                   shear_range=0.2,
+                                   zoom_range=0.2,
+                                   horizontal_flip=True)
+
+print("\nTraining the data...\n")
+training_set = train_datagen.flow_from_directory('dataset/train/',
+                                                 target_size=(224,224),
+                                                 batch_size=12,
+                                                 class_mode='categorical'
+                                                 )
+
+test_set = train_datagen.flow_from_directory('dataset/test/',
+                                            target_size=(224,224),
+                                            batch_size=12,
+                                            class_mode='categorical'
+                                            )
+print("\n Testing the data.....\n")
+
+#Building CNN Model 
+classifier = Sequential()
+
+classifier.add(Convolution2D(512, (3, 3), input_shape=(224, 224, 3), activation='relu',strides=(3,3)))
+
+classifier.add(MaxPooling2D(pool_size=(3, 3)))
+
+classifier.add(Convolution2D(256, (3, 3), activation='relu'))
+
+classifier.add(MaxPooling2D(pool_size=(1, 1)))
+
+classifier.add(Flatten())
+
+classifier.add(Dense(units=64, activation='relu'))
+
+classifier.add(Dense(units=14, activation='softmax'))
+
+classifier.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Fitting the model and saving the model
+cnnhistory=classifier.fit(training_set,epochs = 30,validation_data = test_set,verbose = 1)
+classifier.save("models/CNN.h5")
+
+# Plotting Graphs
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(cnnhistory.history['accuracy'],'r',label='Testing accuracy',color='green')
+plt.plot(cnnhistory.history['val_accuracy'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/cnnacce.png")
+plt.show()
+
+
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(cnnhistory.history['loss'],'r',label='Testing accuracy',color='green')
+plt.plot(cnnhistory.history['val_loss'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/cnnlosse.png")
+plt.show()
+
+
+acc=cnnhistory.history['accuracy'][-1]
+print(acc)
+
+# Model Building
+base_model=MobileNet( input_shape=(224, 224, 3),weights='imagenet',include_top=False)
+x=base_model.output
+x=GlobalAveragePooling2D()(x)
+x=Dense(1024,activation='relu')(x) #we add dense layers so that the model can learn more complex functions and classify for better results.
+x=Dense(1024,activation='relu')(x) #dense layer 2
+x=Dense(512,activation='relu')(x) #dense layer 3
+preds=Dense(14,activation='softmax')(x)
+mobmodel=Model(inputs=base_model.input,outputs=preds)
+
+# Model Compiling, Fitting and Saving the model
+mobmodel.compile(optimizer='Adam',loss= 'categorical_crossentropy',metrics=['accuracy'])
+mobhistory=mobmodel.fit(training_set,
+                epochs=30,
+                verbose=1,
+                validation_data=test_set)
+
+mobmodel.save("models/mobilenet.h5")
+
+# Plotting Graphs
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(mobhistory.history['accuracy'],'r',label='Testing accuracy',color='green')
+plt.plot(mobhistory.history['val_accuracy'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/mobilenet_acc.png")
+plt.show()
+
+
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(mobhistory.history['loss'],'r',label='Testing accuracy',color='green')
+plt.plot(mobhistory.history['val_loss'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/mobilenet_loss.png")
+plt.show()
+
+
+acc=mobhistory.history['accuracy'][-1]
+print(acc)
+
+# Model Building
+Annmodel = Sequential([
+    Flatten(input_shape = [224, 224,3]),
+    Dense(128, activation = 'relu'),
+    Dense(64, activation = 'relu'),
+    Dense(32, activation = 'relu'),
+    Dense(14, activation = 'softmax')
+])
+
+# Model Compiling, Fitting and Saving the model
+Annmodel.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+Annmodel.summary()
+annhistory=Annmodel.fit(training_set,epochs = 30,validation_data = test_set,verbose = 1)
+Annmodel.save("models/ANN.h5")
+
+# Plotting The Graphs
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(annhistory.history['accuracy'],'r',label='Testing accuracy',color='green')
+plt.plot(annhistory.history['val_accuracy'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/ann_acc.png")
+plt.show()
+
+
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(annhistory.history['loss'],'r',label='Testing accuracy',color='green')
+plt.plot(annhistory.history['val_loss'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/ann_loss.png")
+plt.show()
+
+
+annacc=annhistory.history['accuracy'][-1]
+print(annacc)
+
+file name: inception.ipynb
+
+# Importing Required Libraries for the below code
+from tensorflow.keras.layers import Conv2D,Flatten,Dense,MaxPool2D,BatchNormalization,GlobalAveragePooling2D
+from tensorflow.keras.applications.resnet50 import preprocess_input
+from tensorflow.keras.preprocessing.image import ImageDataGenerator,load_img
+from tensorflow.keras.applications.inception_resnet_v2 import InceptionResNetV2
+from tensorflow.keras.models import Model
+from tensorflow.keras.utils import to_categorical
+from matplotlib import pyplot as plt
+import keras
+import os
+import cv2
+
+#Data Pre-processing and applying it to Train and Test Data
+train_datagen = ImageDataGenerator(rescale=1. / 255,
+                                   shear_range=0.2,
+                                   zoom_range=0.2,
+                                   horizontal_flip=True)
+
+print("\nTraining the data...\n")
+training_set = train_datagen.flow_from_directory('dataset/train/',
+                                                 target_size=(299,299),
+                                                 batch_size=12,
+                                                 class_mode='categorical'
+                                                 )
+
+test_set = train_datagen.flow_from_directory('dataset/test/',
+                                            target_size=(299,299),
+                                            batch_size=12,
+                                            class_mode='categorical'
+                                            )
+print("\n Testing the data.....\n")
+
+# Using Base model and building the model
+base_model=InceptionResNetV2(include_top=False,weights='imagenet')
+x=base_model.output
+x=GlobalAveragePooling2D()(x)
+x=Dense(1024,activation='relu')(x)
+predictions=Dense(14,activation='softmax')(x)
+model=Model(inputs=base_model.input,outputs=predictions)
+model.summary()
+
+# Model compiling, Fitting and Saving
+model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
+history=model.fit(training_set,
+          epochs=30,
+        validation_data=test_set)
+
+model.save("models/inception.h5")
+
+# Plotting the Graphs
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(history.history['accuracy'],'r',label='Testing accuracy',color='green')
+plt.plot(history.history['val_accuracy'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/inception_acc.png")
+plt.show()
+
+
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(history.history['loss'],'r',label='Testing accuracy',color='green')
+plt.plot(history.history['val_loss'],label='validation accuracy')
+plt.xlabel('# Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("models/inception_loss.png")
+plt.show()
+
+
+acc=history.history['accuracy'][-1]
+print(acc)
